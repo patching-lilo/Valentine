@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Choice</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="result-page">
+
+    <div class="form-wrapper">
+
+        <form class="choice-form">
+            <h2>Are you the one?</h2>
+
+            <!-- Question 1 -->
+    <label>Are you single?</label>
+    <input type="text" id="q1">
+    <small class="error"></small>
+
+    <!-- Question 2 -->
+    <label>What's your mans full government name?</label>
+    <input type="text" id="q2" disabled>
+    <small class="error"></small>
+
+    <!-- Question 3 -->
+    <label>Who does he love so dearly?</label>
+    <input type="text" id="q3" disabled>
+    <small class="error"></small>
+
+    <!-- Question 4 -->
+    <label>Who's the cutest girl he knows?</label>
+    <input type="text" id="q4" disabled>
+    <small class="error"></small>
+
+    <!-- Question 5 -->
+    <label>Who's the most beautiful woman in the world?</label>
+    <input type="text" id="q5" disabled>
+    <small class="error"></small>
+
+    <button type="button" class="final-btn" id="finalBtn" disabled onclick="showResult()">
+        To be or Not to be
+    </button>
+</form>
+
+        <!-- RESULT -->
+        <div id="result" class="result hidden">
+            <h1>YOU ARE A MATCH</h1>
+            <img src="images/choice.jpg" alt="Match Result">
+            <h1>MSG ME YOUR ANSWER</h1>
+        </div>
+
+    </div>
+
+    <script>
+        function showResult() {
+            document.querySelector('.choice-form').style.display = 'none';
+            document.getElementById('result').classList.remove('hidden');
+        }
+        const answers = [
+    "no",
+    "kenneth michael remmitz",
+    "me",
+    "me",
+    "i am"
+];
+
+const inputs = [
+    document.getElementById("q1"),
+    document.getElementById("q2"),
+    document.getElementById("q3"),
+    document.getElementById("q4"),
+    document.getElementById("q5")
+];
+
+const errors = document.querySelectorAll(".error");
+const finalBtn = document.getElementById("finalBtn");
+
+inputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+        const userAnswer = input.value.trim().toLowerCase();
+
+        if (userAnswer === answers[index]) {
+            errors[index].textContent = "";
+            input.disabled = true;
+
+            if (inputs[index + 1]) {
+                inputs[index + 1].disabled = false;
+                inputs[index + 1].focus();
+            }
+
+            checkAllCorrect();
+        } else {
+            errors[index].textContent = "WRONG ANSWER!";
+        }
+    });
+});
+
+function checkAllCorrect() {
+    const allCorrect = inputs.every((input, i) =>
+        input.value.trim().toLowerCase() === answers[i]
+    );
+
+    finalBtn.disabled = !allCorrect;
+}
+    </script>
+
+</body>
+</html>
